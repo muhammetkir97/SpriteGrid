@@ -16,7 +16,19 @@ public class SystemManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(Input.GetMouseButtonDown(0)) ClickToGrid();
+    }
+
+    private void ClickToGrid()
+    {
+
+        Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        RaycastHit2D hitInfo = Physics2D.Raycast(mouseWorldPosition, Vector2.zero);
+        if (hitInfo)
+        {
+            hitInfo.transform.GetComponent<GridElement>().SetMarkStatus(true);
+        }
     }
 
 
