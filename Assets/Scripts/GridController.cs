@@ -15,4 +15,9 @@ public class GridController : MonoBehaviour
     {
         
     }
+
+    public void CreateGrid(int size)
+    {
+        
+    }
 }
