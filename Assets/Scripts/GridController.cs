@@ -11,6 +11,9 @@ public class GridController : MonoBehaviour
 
     [Header("Camera")]
     [SerializeField] private Camera gameCamera;
+
+    public int checkCount = 0;
+    private int gridSize;
     void Start()
     {
         
@@ -24,6 +27,8 @@ public class GridController : MonoBehaviour
 
     public void CreateGrid(int size)
     {
+        gridSize = size;
+
         if(gridParent.childCount > 0)
         {
             for(int i = gridParent.childCount-1; i >= 0; i--) Destroy(gridParent.GetChild(i).gameObject);
@@ -39,6 +44,8 @@ public class GridController : MonoBehaviour
                 float xCoord = x + (x * gridSpacing.x);
                 float yCoord = y + (y * gridSpacing.y);
                 cloneGridElement.transform.localPosition = new Vector3(xCoord, yCoord);
+                cloneGridElement.GetComponent<GridElement>().SetCoordinate(new Vector2(x,y));
+                cloneGridElement.GetComponent<GridElement>().SetController(this);
             }
         }
 
@@ -58,5 +65,16 @@ public class GridController : MonoBehaviour
         }
 
         
+ 
+    }
+
+    public GridElement GetGridElement(Vector2 coord)
+    {
+        int childNumber = (int) (coord.x * gridSize + coord.y);
+        
+        GridElement selectedElement = null;
+        if(childNumber < gridParent.childCount && childNumber >= 0) selectedElement = gridParent.GetChild(childNumber).GetComponent<GridElement>();
+
+        return selectedElement;
     }
 }
